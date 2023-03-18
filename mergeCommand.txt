@@ -1,3 +1,3 @@
-cat *.ss > out.s
+cat *.s > out.ss
 
-.ss so that we don't have to out.s each time
+.ss so that we don't merge out file each time into itself
