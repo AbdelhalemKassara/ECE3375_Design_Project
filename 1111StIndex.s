@@ -1,11 +1,10 @@
-@these are all constants
+@these are all constants (= gets the value)
 .text
 .equ SWITCH_BASE, 0xff200040
 .equ LEDS_BASE, 0xFF200000
 .equ BUTTON_BASE, 0xff200050
 .equ DEFAULT_TEMP, 0x19 
 
-@display base address
 .equ DISP1, 0xFF200020
 .equ DISP2, 0xFF200021
 .equ DISP3, 0xFF200022
@@ -15,12 +14,9 @@
 
 .global _start
 _start:
+mov r0, #1
+loop:
+  bl UPDATE_TARGET_TEMP
+  bl PUSH_TO_DISPLAY
+b loop
 
-
-b _start
-
-
-@these are all variables
-
-PREV_STATE_INC_BUT: .word 0x0
-PREV_STATE_DEC_BUT: .word 0x0
