@@ -1,0 +1,3 @@
+cat *.ss > out.s
+
+.ss so that we don't have to out.s each time
