@@ -45,4 +45,3 @@ and r5, #1
 cmp r5, #1
 ldreq r0, =DEFAULT_TEMP
 pop {r4-r12, pc}
-

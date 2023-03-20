@@ -12,11 +12,14 @@
 .equ DISP5, 0xFF200030
 .equ DISP6, 0xFF200031
 
+.equ MIN_TARGET_TEMP, 0x1
+.equ MAX_TARGET_TEMP, 0x1
+
 .global _start
 _start:
 mov r0, #1
 loop:
   bl UPDATE_TARGET_TEMP
-  bl PUSH_TO_DISPLAY
+  bl SET_SINGLE_SEG
 b loop
 

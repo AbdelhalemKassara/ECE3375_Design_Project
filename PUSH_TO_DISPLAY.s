@@ -1,21 +1,50 @@
+
+
+/*
+inputs:
+r0 is a 16-bit signed value in deg c I think
+
+outputs:
+nothing
+*/
+PUSH_TO_DISPLAY:
+push {r4-r12, lr}
+	
+pop {r4-r12, pc}
+
+
+/*
+inputs:
+in r0 takes in a signed 16 bit number
+
+output:
+in r0 returns a signed 32 bit number
+*/
+CONVERT_16SBIT_TO_32SBIT:
+push {r4-r12, lr}
+	
+pop {r4-r12, pc}
+
 /*
 inputs:
 in r0 it takes in the value to be displayed
 in r1 is the offset from the rightmost seven segment digit
 
+if r0 is 0x10 then we will display a negative sign
 outputs:
 nothing
 */
 
-PUSH_TO_DISPLAY:
+SET_SINGLE_SEG:
 push {r5, r6, lr}
   //r0 is the value being displayed
   //r1 is display offest
+	mov r6, #0 @so it won't display anything when the value is invalid
 	cmp r0, #0x0
 	moveq r6, #0b0111111
 
 	cmp r0, #0x1
-	moveq r6, #0b0110000
+	moveq r6, #0b0000110
 	
 	cmp r0, #0x2
 	moveq r6, #0b01011011
@@ -41,6 +70,9 @@ push {r5, r6, lr}
 	cmp r0, #0x9
 	moveq r6, #0b1101111
 	
+	cmp r0, #0x10
+	moveq r6, #0b1000000
+
   //this gets which seven seg display will be modified
 	cmp r1, #0
 	ldreq r5, =DISP1
