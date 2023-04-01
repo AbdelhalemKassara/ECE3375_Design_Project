@@ -2,28 +2,29 @@
 
 /*
 inputs:
-r0 is a 16-bit signed value in deg c I think
+r0 is a signed value
+outputs:
+r0 as a positive value
+and r1 is 1 if it was negative or 0 if it was a positive number
+*/
+CONV_SIGNED_TO_UNSIGNED:
+push {r4-r12, lr}
+	
+pop {r4-r12, pc}
+
+/*
+inputs:
+r0 is a signed value
 
 outputs:
-nothing
-*/
+nothing (just displays value on seven segment)
+ */
 PUSH_TO_DISPLAY:
 push {r4-r12, lr}
 	
 pop {r4-r12, pc}
 
 
-/*
-inputs:
-in r0 takes in a signed 16 bit number
-
-output:
-in r0 returns a signed 32 bit number
-*/
-CONVERT_16SBIT_TO_32SBIT:
-push {r4-r12, lr}
-	
-pop {r4-r12, pc}
 
 /*
 inputs:

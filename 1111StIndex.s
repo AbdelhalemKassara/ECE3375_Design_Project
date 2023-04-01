@@ -1,4 +1,9 @@
 @these are all constants (= gets the value)
+.data
+ADC_To_Temp_Arr:
+  .word 0x4
+  .word 0x12
+
 .text
 .equ SWITCH_BASE, 0xff200040
 .equ LEDS_BASE, 0xFF200000
@@ -15,9 +20,14 @@
 .equ MIN_TARGET_TEMP, 0x1
 .equ MAX_TARGET_TEMP, 0x1
 
+.equ Mask_bit_15, 0x8000
+.equ Mask_12_bits, 0x00000FFF
+.equ ADC_BASE, 0xFF204000
+
 .global _start
 _start:
 mov r0, #1
+
 @clear the registers
 mov r1, #0
 mov r2, #0
