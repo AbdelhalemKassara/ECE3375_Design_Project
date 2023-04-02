@@ -1,3 +1,5 @@
+
+
 /*
 input:
 
@@ -6,9 +8,22 @@ r0: contains the current temperature
  */
 GET_CUR_TEMP:
 push {r4-r12, lr}
-	bl Get_Pot_Val //gets the temperature
+	bl Get_Pot_Val //gets the temperature r0
+	mov r4, r0, lsr #7 //this has the address offset to get the temp
 
+	//convert the raw adc val to the temperature adc/2^7
+	ldr r5, =MASK_7_BITS
+	and r5, r0, r5 
 
+	//check the the value is closer to the lower or larger value
+	cmp r5, #0b111111
+	addhi r4, #1 //add one to get the higher address
+
+	//multiply by 4 because of the way addressing works
+	add r4, r4
+	add r4, r4
+	ldr r5, ADCToTempConvStAdd
+	ldr r0, [r5, r4] //gets the temperature value
 pop {r4-r12, pc}
 
 
@@ -36,3 +51,5 @@ push {r4, r5, r6, r7, r8, lr}
 	//r0 contains the pot value	
 	and r0, r5, r7
 pop {r4, r5, r6, r7, r8, pc}
+
+
