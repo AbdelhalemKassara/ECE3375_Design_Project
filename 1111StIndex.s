@@ -52,10 +52,7 @@ str r6, [r5, #0x8] //write the timeout to the timer control register
 
 loop:
   bl WAIT_TIMER
-
   bl TIMER_DONE
-
-
 b loop
 
 
@@ -65,7 +62,8 @@ ldr r5, =MPCORE_PRIV_TIMER //MPCore private timer base address
 
 WAIT_LOOP:
 //do stuff here while waiting
-
+  bl UPDATE_TARGET_TEMP //returns r0 as target temp
+  ldr r1, TARGET_TEMP
 
 ldr r6, [r5, #0xC]
 cmp r6, #0 //check if we can break out of the loop
@@ -75,8 +73,7 @@ pop {r4-r12, pc}
 TIMER_DONE:
 push {r4-r12, lr}
   //do stuff here when the timer is done
-  
-  bl UPDATE_TARGET_TEMP //returns r0 as target temp
+
 
 pop {r4-r12, pc}
 

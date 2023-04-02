@@ -9,7 +9,18 @@ and r1 is 1 if it was negative or 0 if it was a positive number
 */
 CONV_SIGNED_TO_UNSIGNED:
 push {r4-r12, lr}
-	
+	mov r4, r0, lsr #31
+	cmp r4, #0
+
+	//if it is positive this will run
+	moveq r1, #0
+	beq _SKIP_CONV_SIGNED
+
+	//if it is negative this will run
+	sub r0, #1 //subtracts one
+	mvn r0, r0 //inverts the bits
+	mov r1, #1 //sets r1 as the negative flag
+	_SKIP_CONV_SIGNED:
 pop {r4-r12, pc}
 
 /*
