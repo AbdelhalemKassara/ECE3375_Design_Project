@@ -194,11 +194,20 @@ ldr r5, =MPCORE_PRIV_TIMER //MPCore private timer base address
 
 WAIT_LOOP:
 //do stuff here while waiting
+  ldr r0, TARGET_TEMP_VAL
   bl UPDATE_TARGET_TEMP //returns r0 as target temp
   str r0, TARGET_TEMP_VAL //store the current target temp
-  
-  ldr r0, CUR_TEMP
-  bl PUSH_TO_DISPLAY
+
+  //switch between which value we should display
+  ldr r4, =SWITCH_BASE
+  ldr r0, [r4] //read value from switch
+  and r0, #1 
+  cmp r0, #1
+  ldrne r0, TARGET_TEMP_VAL
+  ldreq r0, CUR_TEMP
+
+  bl PUSH_TO_DISPLAY   //display value on the 7seg
+
   
 
   //code for the loop
@@ -212,7 +221,7 @@ push {r4-r12, lr}
   //do stuff here when the timer is done
   bl GET_CUR_TEMP //gets the current temperature in r0
   ldr r4, =CUR_TEMP
-  str r0, [r4]
+  str r0, [r4] //store the current temperature in the CUR_TEMP variable
 
 pop {r4-r12, pc}
 

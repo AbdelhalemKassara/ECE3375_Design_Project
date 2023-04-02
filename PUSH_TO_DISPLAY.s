@@ -35,13 +35,14 @@ PUSH_TO_DISPLAY:
 push {r4-r12, lr}
 	bl CONV_SIGNED_TO_UNSIGNED //returns r0 as an unsigned number and r1 is 1 if the value is negative
 	
-	//set the negative sign
+	//set the negative sign or clear if there is none
 	cmp r1, #1
-	pusheq {r0}
+	push {r0}
 	moveq r0, #0x10
-	moveq r1, #5
-	bleq SET_SINGLE_SEG
-	popeq {r0}
+	movne r0, #0x11
+	mov r1, #5
+	bl SET_SINGLE_SEG
+	pop {r0}
 
 	mov r4, #0 //counter
 	//sets the value
@@ -66,6 +67,7 @@ in r0 it takes in the value to be displayed
 in r1 is the offset from the rightmost seven segment digit
 
 if r0 is 0x10 then we will display a negative sign
+if r0 is 0x11 then it will clear the segment
 outputs:
 nothing
 */
@@ -107,6 +109,9 @@ push {r5, r6, lr}
 	
 	cmp r0, #0x10
 	moveq r6, #0b1000000
+
+	cmp r0, #0x11
+	moveq r6, #0b0
 
   //this gets which seven seg display will be modified
 	cmp r1, #0
