@@ -10,6 +10,7 @@ r1 is the result of division
 r0 is the remainder
 */
 
+
 DIVISION_MODULO:
 push {r2, lr}
   mov r2, #0

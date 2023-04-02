@@ -1,6 +1,6 @@
 
 
-/*
+/* 
 inputs:
 r0 is a signed value
 outputs:
@@ -30,12 +30,38 @@ r0 is a signed value
 outputs:
 nothing (just displays value on seven segment)
  */
+
 PUSH_TO_DISPLAY:
 push {r4-r12, lr}
-	
+bl CONV_SIGNED_TO_UNSIGNED
+
+cmp r1 , #1
+moveq r1 , #5
+mov r4 , r0 
+
+moveq r0 , #0x10
+
+bl SET_SINGLE_SEG
+
+mov r1, #10
+mov r0 , r4 
+
+mov r5, #5
+Loop_Signed:
+
+bl DIVISION_MODULO
+
+push{r0}
+mov r0 , r1
+mov r1, r5 
+bl PUSH_TO_DISPLAY
+pop{r0}
+mov r1 , #10
+sub r5 , #1
+cmp r5 , #0
+bhi Loop_Signed
+
 pop {r4-r12, pc}
-
-
 
 /*
 inputs:
