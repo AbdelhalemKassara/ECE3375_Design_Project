@@ -1,4 +1,18 @@
-//this returns the value of the first pot in register r0
+/*
+input:
+
+output:
+r0: contains the current temperature
+ */
+GET_CUR_TEMP:
+push {r4-r12, lr}
+	bl Get_Pot_Val //gets the temperature
+
+
+pop {r4-r12, pc}
+
+
+//this returns the value of the first pot in register r0 (12bits)
 Get_Pot_Val:
 push {r4, r5, r6, r7, r8, lr}
 	ldr r4, =Mask_bit_15

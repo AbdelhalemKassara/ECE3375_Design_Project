@@ -63,12 +63,12 @@ ldr r5, =MPCORE_PRIV_TIMER //MPCore private timer base address
 WAIT_LOOP:
 //do stuff here while waiting
   bl UPDATE_TARGET_TEMP //returns r0 as target temp
-  str r0, TARGET_TEMP_VAL
+  str r0, TARGET_TEMP_VAL //store the current target temp
 
 
-ldr r6, [r5, #0xC]
-cmp r6, #0 //check if we can break out of the loop
-beq WAIT_LOOP
+  ldr r6, [r5, #0xC]
+  cmp r6, #0 //check if we can break out of the loop
+  beq WAIT_LOOP
 pop {r4-r12, pc}
 
 TIMER_DONE:
