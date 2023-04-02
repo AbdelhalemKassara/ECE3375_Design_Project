@@ -33,34 +33,31 @@ nothing (just displays value on seven segment)
 
 PUSH_TO_DISPLAY:
 push {r4-r12, lr}
-bl CONV_SIGNED_TO_UNSIGNED
+	bl CONV_SIGNED_TO_UNSIGNED //returns r0 as an unsigned number and r1 is 1 if the value is negative
+	
+	//set the negative sign
+	cmp r1, #1
+	pusheq {r0}
+	moveq r0, #0x10
+	moveq r1, #5
+	bleq SET_SINGLE_SEG
+	popeq {r0}
 
-cmp r1 , #1
-moveq r1 , #5
-mov r4 , r0 
-
-moveq r0 , #0x10
-
-bl SET_SINGLE_SEG
-
-mov r1, #10
-mov r0 , r4 
-
-mov r5, #5
-Loop_Signed:
-
-bl DIVISION_MODULO
-
-push{r0}
-mov r0 , r1
-mov r1, r5 
-bl PUSH_TO_DISPLAY
-pop{r0}
-mov r1 , #10
-sub r5 , #1
-cmp r5 , #0
-bhi Loop_Signed
-
+	mov r4, #0 //counter
+	//sets the value
+	SET_DISPLAYS_LOOP:
+	cmp r4, #4
+	bhi SET_DISPLAYS_LOOP_EXIT
+		mov r1, #10
+		bl DIVISION_MODULO //takes in (r0/r1) and returns r0 is remainder an r1 is result
+		push {r1}
+		mov r1, r4
+		bl SET_SINGLE_SEG
+		pop {r0}
+	add r4, #1
+	b SET_DISPLAYS_LOOP
+	SET_DISPLAYS_LOOP_EXIT:
+	
 pop {r4-r12, pc}
 
 /*
