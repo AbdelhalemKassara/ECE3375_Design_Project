@@ -9,6 +9,7 @@ r0: contains the current temperature
 GET_CUR_TEMP:
 push {r4-r12, lr}
 	bl Get_Pot_Val //gets the temperature r0
+	//ldr r0, =#0xffffff //test variable
 	mov r4, r0, lsr #7 //this has the address offset to get the temp
 
 	//convert the raw adc val to the temperature adc/2^7

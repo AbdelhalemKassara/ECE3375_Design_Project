@@ -180,7 +180,9 @@ mov r12, #0
 
 ldr r5, =MPCORE_PRIV_TIMER //MPCore private timer base address
 ldr r6, =TIME_OUT
-str r6, [r5, #0x8] //write the timeout to the timer control register
+str r6, [r5] //write the timeout to the timer control register
+mov r6, #0b011 // set bits: mode = 1 (auto), enable = 1
+str r6, [r5, #0x8]
 
 loop:
   bl WAIT_TIMER
@@ -211,7 +213,8 @@ WAIT_LOOP:
   
 
   //code for the loop
-  ldr r6, [r5, #0xC]
+  ldr r5, =MPCORE_PRIV_TIMER //MPCore private timer base address
+  ldr r6, [r5, #0xC] //read timer status
   cmp r6, #0 //check if we can break out of the loop
   beq WAIT_LOOP
 pop {r4-r12, pc}
