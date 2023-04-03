@@ -192,7 +192,6 @@ b loop
 
 WAIT_TIMER:
 push {r4-r12, lr}
-ldr r5, =MPCORE_PRIV_TIMER //MPCore private timer base address
 
 WAIT_LOOP:
 //do stuff here while waiting
@@ -226,6 +225,9 @@ push {r4-r12, lr}
   ldr r4, =CUR_TEMP
   str r0, [r4] //store the current temperature in the CUR_TEMP variable
 
+  mov r6, #1
+  ldr r5, =MPCORE_PRIV_TIMER //MPCore private timer base address
+  str r6, [r5, #0xC]
 pop {r4-r12, pc}
 
 
