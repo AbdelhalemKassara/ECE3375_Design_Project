@@ -1,6 +1,6 @@
 
 .data
-// to get temp it is adc(12bit)/2^7
+// to get temp it is adc(12bit)/2^5
 ADC_To_Temp_Arr:
 .word 0xFFFFFFE7
 .word 0xFFFFFFE8
@@ -208,7 +208,7 @@ WAIT_LOOP:
   ldreq r0, CUR_TEMP
 
   bl PUSH_TO_DISPLAY   //display value on the 7seg
-
+  bl UPDATE_LEDS //update the leds wh
   
 
   //code for the loop
@@ -220,6 +220,11 @@ pop {r4-r12, pc}
 
 TIMER_DONE:
 push {r4-r12, lr}
+  //update the current time
+  ldr r4, CUR_TIME
+  add r4, #1 
+  str r4, CUR_TIME
+
   //do stuff here when the timer is done
   bl GET_CUR_TEMP //gets the current temperature in r0
   ldr r4, =CUR_TEMP

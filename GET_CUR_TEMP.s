@@ -10,9 +10,9 @@ GET_CUR_TEMP:
 push {r4-r12, lr}
 	bl Get_Pot_Val //gets the temperature r0
 	//ldr r0, =#0xffffff //test variable
-	mov r4, r0, lsr #7 //this has the address offset to get the temp
+	mov r4, r0, lsr #5 //this has the address offset to get the temp
 
-	//convert the raw adc val to the temperature adc/2^7
+	//convert the raw adc val to the temperature adc/2^5
 	ldr r5, =MASK_7_BITS
 	and r5, r0, r5 
 

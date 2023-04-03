@@ -6,3 +6,6 @@ PREV_STATE_DEC_BUT: .word 0x0
 ADCToTempConvStAdd: .word ADC_To_Temp_Arr
 TARGET_TEMP_VAL: .word DEFAULT_TEMP
 CUR_TEMP: .word DEFAULT_TEMP
+CUR_TIME: .word 0 //this is time in seconds
+LAST_ON_HEATER: .word 0 //this is time in seconds 
+LAST_ON_AIRCON: .word 0 //this is time in seconds
