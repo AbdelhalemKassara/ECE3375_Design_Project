@@ -9,3 +9,5 @@ CUR_TEMP: .word DEFAULT_TEMP
 CUR_TIME: .word 0 //this is time in seconds
 LAST_ON_HEATER: .word 0 //this is time in seconds 
 LAST_ON_AIRCON: .word 0 //this is time in seconds
+HEATER_ON: .word 0
+AIRCON_ON: .word 0

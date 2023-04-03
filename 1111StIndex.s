@@ -160,6 +160,10 @@ ADC_To_Temp_Arr:
 //this is for the adc conversion
 .equ MASK_7_BITS, 0b1111111
 
+//this is for the UPDATE_LEDS 
+.equ MIN_5, 300
+.equ BIT_9_ON, 0b100000000
+
 .global _start
 _start:
 mov r0, #1
@@ -224,7 +228,7 @@ push {r4-r12, lr}
   ldr r4, CUR_TIME
   add r4, #1 
   str r4, CUR_TIME
-
+  
   //do stuff here when the timer is done
   bl GET_CUR_TEMP //gets the current temperature in r0
   ldr r4, =CUR_TEMP
